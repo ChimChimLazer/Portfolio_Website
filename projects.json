@@ -1,0 +1,36 @@
+[
+    {
+        "name": "Prototyle Runner",
+        "skills": ["C#", "Unity"],
+        "description": "First Person Movement shooter made in Unity in my second year of university.",
+        "image": "Assets/Project_Placeholder.png"
+    },
+    {
+        "name": "Noughts & Crosses",
+        "skills": ["C++"],
+        "description": "Simple Noughts & Crosses game made in C++",
+        "image": "Assets/Noughts_&_Crosses.jpg",
+        "bigDescription": "Markdown/Noughts&Crosses.md",
+        "ichIo": "https://itch.io/",
+        "git": "https://github.com/",
+        "download": "Assets/_Downloadable/James_Edwards_CV.pdf"
+    },
+    {
+        "name": "Music Combat",
+        "skills": ["C#", "Unity", "Blender"],
+        "description": "Small fighting game. Made with models I created in Blender",
+        "image": "Assets/Project_Placeholder.png"
+    },
+    {
+        "name": " K-Nearest Neighbors",
+        "skills": ["Python", "Machine Learning"],
+        "description": "K-Nearest Neighbors (KNN) Algorithm programmed using Python.",
+        "image": "Assets/KNN.png"
+    },
+    {
+        "name": "Portfolio Webcite",
+        "skills": ["HTML", "CSS", "Javascript"],
+        "description": "Webcite created to host all of my personal projects & 3D Models",
+        "image": "Assets/Portfolio_Webcite.png"
+    }
+]
