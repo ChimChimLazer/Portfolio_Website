@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Markdown to HTML Converter</title>
+  <!-- Include Marked library from CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/marked@2.0.0/lib/marked.min.js"></script>
+</head>
+<body>
+  <h1>Markdown to HTML Converter</h1>
+  <input type="file" id="fileInput">
+  <button id="downloadButton" style="display:none;">Download HTML</button>
+  <div id="output"></div>
+
+  <script>
+    // Function to convert markdown content to HTML
+    function convertMarkdownToHTML(markdownFile) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+          const markdownContent = e.target.result;
+          try {
+            // Convert markdown to HTML using the 'marked' library
+            const htmlContent = marked(markdownContent);
+            resolve(htmlContent);  // Return the HTML content using Promise resolve
+          } catch (error) {
+            reject(error);  // Reject if there is an error during conversion
+          }
+        };
+
+        reader.onerror = function(e) {
+          reject(e.target.error);  // Reject if file reading fails
+        };
+
+        // Read the markdown file as text
+        reader.readAsText(markdownFile);
+      });
+    }
+
+    // Event listener for file input
+    document.getElementById('fileInput').addEventListener('change', async function(event) {
+      const file = event.target.files[0];
+
+      // Ensure the user selects a file
+      if (!file) {
+        alert('Please select a file.');
+        return;
+      }
+
+      const fileName = file.name.toLowerCase();
+      if (fileName.endsWith('.md') || fileName.endsWith('.markdown')) {
+        try {
+          // Use the convertMarkdownToHTML function and wait for the result
+          const htmlContent = await convertMarkdownToHTML(file);
+
+          // Display the HTML output in the div
+          document.getElementById('output').innerHTML = htmlContent;
+
+          // Enable the download button and set up the download functionality
+          const downloadButton = document.getElementById('downloadButton');
+          downloadButton.style.display = 'inline-block';
+
+          downloadButton.onclick = function() {
+            // Create a Blob for the HTML content
+            const blob = new Blob([htmlContent], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+
+            // Create a temporary download link
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'converted.html'; // Default download file name
+            a.click();
+
+            // Revoke the object URL after the download is initiated
+            URL.revokeObjectURL(url);
+          };
+        } catch (error) {
+          console.error('Error during conversion:', error);
+          alert('An error occurred during the conversion.');
+        }
+      } else {
+        alert('Please select a valid Markdown file (.md or .markdown).');
+      }
+    });
+  </script>
+</body>
+</html>

@@ -387,6 +387,12 @@ footer{
     color: black;
 }
 
+#project-title-area img{
+    aspect-ratio: 1 / 1;
+    height: auto;
+    width: 500px;
+}
+
 /* Animations */
 
 .offPageRight{

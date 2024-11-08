@@ -62,17 +62,16 @@ function appendAsListItem(content, list){
     list.appendChild(li);
 }
 
-function simpleMarkdownToHTML(markdown) {
-    // Very basic Markdown to HTML conversion
-    return markdown
-        .replace(/(#+)\s*(.*)/g, (_, hashes, title) => `<h${hashes.length}>${title}</h${hashes.length}>`) // Headers
-        .replace(/(\*\*|__)(.*?)\1/g, '<strong>$2</strong>') // Bold
-        .replace(/(\*|_)(.*?)\1/g, '<em>$2</em>') // Italics
-        .replace(/~~(.*?)~~/g, '<del>$1</del>') // Strikethrough
-        .replace(/!\[(.*?)\]\((.*?)\)/g, '<img alt="$1" src="$2">') // Images
-        .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2">$1</a>') // Links
-        .replace(/\n/g, '<br>'); // New lines
-}
+function convertMarkdownToHTML(markdownContent) {
+    try {
+      // Convert markdown to HTML using the 'marked' library
+      return marked(markdownContent);
+    } catch (error) {
+      console.error('Error during conversion:', error);
+      alert('An error occurred during the conversion.');
+      return '';
+    }
+  }
 
 // Function to fetch Markdown file content
 async function fetchMarkdown(file) {
@@ -96,7 +95,7 @@ async function fetchMarkdown(file) {
 async function loadMarkdown(filePath, contentLocationId) {
     const markdown = await fetchMarkdown(filePath); // Fetch the .md file
     if (markdown) { // Check if markdown content is not null
-        const html = simpleMarkdownToHTML(markdown);
+        const html = convertMarkdownToHTML(markdown);
         document.getElementById(contentLocationId).innerHTML = html; // Only update HTML if fetch was successful
     }
 }
